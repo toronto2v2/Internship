@@ -501,5 +501,3 @@ words; // ["The", "quick", "brown", "fox"]
 
 const wordsRestricted = str14.split(" ", 2 ); // // ["The", "quick"]
 
-
-
