@@ -52,7 +52,7 @@ function emulate(){
     const exampleData = {
         name: 'misha',
         sex: 'male',
-        age: 5
+        // age: 5
     };
     
     try{
