@@ -1,8 +1,5 @@
 
-const icludesArr = ['misha', 'tina', 'ann', 'viktor', 'mark', 'sania'];
+const withArr = ['empty', 'empty'];
 
-const includesStatus = icludesArr.includes('ann', -3);          // false
-
-const includesStatus2 = icludesArr.includes('tina', NaN);      // true
-
-console.log(includesStatus2);
+const withedArr = withArr.with(0, 'tina');  //[ 'tina', 'empty' ]
+console.log(withArr);
