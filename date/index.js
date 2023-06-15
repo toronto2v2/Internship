@@ -44,3 +44,7 @@ new Date().toTimeString();                  // 21:33:38 GMT+0300 (Восточн
 new Date().toJSON();                        // 2023-05-29T18:33:23.795Z
 new Date().toString();                      // Mon May 29 2023 21:35:34 GMT+0300 (Восточная Европа, летнее время)
 new Date().toUTCString();                   // Mon, 29 May 2023 18:36:17 GMT
+
+
+
+

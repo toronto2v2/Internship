@@ -15,8 +15,6 @@ arr = new Array(5);                                 // [, , , , ,]   <5 empty it
 
 // Методи масивів:
 
-
-
 /*
 __________________________________________________________________________________________
 |                                                                                        |
@@ -68,7 +66,7 @@ let from;
 // Аргументи:
 
 // === arrayLike - те, що потрібно перетворити в масив
-// === mapFn (не обовязковий)  - функція, яка буде визвана для кожного елементу масиву
+// === mapFn (не обовязковий)  - функція, яка буде визвана для кожного елементу масиву. Приймає 2 аргументи: (item, index)
 // === thisArg (не обовязковий) - значення this, яке буде використовуватись в mapFn
 
 Array.from(null);                               // typeerror
@@ -88,6 +86,11 @@ const arrFromSetWithFunc = Array.from(set, (item,index) => {
     return `Value: ${item}, index: ${index}`                    //робимо маніпуляції певні
 });
 arrFromSetWithFunc;                             // [ 'Value: some, index: 0', 'Value: tina, index: 1' ]
+
+
+
+
+
 
 
 
@@ -126,7 +129,6 @@ const concatArr2 = ['c', 'd',];
 const concatArr3 = ['e', 'f',];
 
 const concatedArr = concatArr1.concat(concatArr2, concatArr3, 5, 'tina', {foo: 'bar'});   // ['a', 'b', 'c', 'd', 'e', 'f', 5, 'tina', {foo: 'bar'}]
-
 
 
 
@@ -336,7 +338,7 @@ ________________________________________________________________________________
 |                                                                                        |
 |                   Array.prototype.includes(searchElement, fromIndex = 0)               |
 |________________________________________________________________________________________| */
-let includes;
+let includess;
 
 // Метод перевіряє чи є певний елемент в масиві. Повертає true або false.
 
@@ -367,7 +369,7 @@ ________________________________________________________________________________
 let flat;
 
 // Цей метод повертає новий масив, в якому всі вкладені масиви піднімаються на  depth рівнів вверх
-// тобто з багатомірних масивів ми можемо зробити один масив одного рівня
+// тобто з багатомірних масивів ми можемо зробити один масив одного рівня. Не змінює початковий масив. повертає новий
 
 // Аргументи: 
 
@@ -381,7 +383,8 @@ const flatArr = [
     "yosup",
     ["mars", "luna", "loki", [12, 45, 123, ["foo", "bar", "baz"]]],
 ];
-
+const flatedArr1231 = flatArr.flat();     // ['misha','slava','ann','olya','yosup','mars','luna','loki',[ 12, 45, 123, [ 'foo', 'bar', 'baz' ] ]
+console.log(flatArr);
 const flatedArr1 = flatArr.flat(1);     // ['misha','slava','ann','olya','yosup','mars','luna','loki',[ 12, 45, 123, [ 'foo', 'bar', 'baz' ] ]
 const flatedArr2 = flatArr.flat(2);     // ['misha','slava','ann','olya','yosup','mars','luna','loki', 12, 45, 123, [ 'foo', 'bar', 'baz']
 const flatedArr3 = flatArr.flat(3);     // ['misha','slava','ann','olya','yosup','mars','luna','loki', 12, 45, 123,  'foo', 'bar', 'baz']
@@ -408,7 +411,11 @@ let indexOf;
 
 // Метод порівнює елемент який шукаєм з елементами в масиві методом строгого порівняння. Тобто такі значення як 
 // undefined, null і тд не будуть перетворені в рядок
+
+// йде з початку масива в кінець
  
+// fromIndex приймає мінусові значення
+
 const indexOfArr = ['zhabka', 'tima', 'biluj', 'kiri', 'undefined','kiri'];
 
 const indexOfPosition = indexOfArr.indexOf('kiri', 3); // fromIndex включно. Поверне 3
@@ -416,7 +423,7 @@ const indexOfPosition2 = indexOfArr.indexOf('kiri', 4); // -1
 const indexOfPosition3 = indexOfArr.indexOf(['kiri']); // -1        тут строго порівнюється
 const indexOfPosition4 = indexOfArr.indexOf(undefined, 4); // -1
 const indexOfPosition5 = indexOfArr.indexOf('kiri'); // 3        повертає перший знайдений елемент
-
+const indexOfPosition6 = indexOfArr.indexOf('undefined', -2) // 5 
 
 
 
@@ -430,6 +437,8 @@ ________________________________________________________________________________
 let lastIndexOf;
 // Метод повертає останній індекс по якому данний елемент може бути знайдений. 
 // Якщо не знаходить то повертає -1; fromIndex за замовч = arr.prototype.length
+
+// йде з кінця масиву в початок
 
 // fromIndex ВКЛЮЧНО // 
 
@@ -545,8 +554,6 @@ const reducedArr = reduceArr.reduce((acc,next, i, initialArr) => { // якщо �
                                                                     // якщо масив пустий а initialValue вказаний, то повернеся
                                                                     // initialValue а callback не буде викликаний
 //
-
-
 
 
 
@@ -678,16 +685,16 @@ let slice;
 //
 // ====    end - (необовязковий) - індекс, на якому потрібно закінчити вирізання (не включно)
 //                  *** якщо він мінусовий, то вказує зміщення відносно кінця послідовності,
-//                      виклик slice(2, -1) виріже елементи з 2(включно) і до 2 з кінця
+//                      виклик slice(2, -2) виріже елементи з 2(включно) і до 2 з кінця
 //                  *** якщо end опущений, то вирізає до кінця послідовності
 //
 const sliceObj = {foo: 'bar'}
 const sliceArr = ['tina', 'misha', sliceObj, 123, ['roboto']];
-
-const slicedArr = sliceArr.slice();     // [ 'tina', 'misha', { foo: 'bar' }, 123, [ 'roboto' ] ]
-const slicedArr2 = sliceArr.slice(3);     // [ 123, [ 'roboto' ] ]
-const slicedArr3 = sliceArr.slice(-4, -2);     // [ 'misha', { foo: 'bar' } ]
-
+const slicedArr = sliceArr.slice();              // [ 'tina', 'misha', { foo: 'bar' }, 123, [ 'roboto' ] ]
+slicedArr.foo = 'baz';                           // змінивася початковий sliceObj
+const slicedArr2 = sliceArr.slice(3);            // [ 123, [ 'roboto' ] ]
+const slicedArr3 = sliceArr.slice(-4, -2);       // [ 'misha', { foo: 'baz' } ]
+console.log(slicedArr3);
 
 
 
@@ -740,6 +747,16 @@ const removedFromSpliceArr2 = spliceArr1.splice(0);  // ['tina', 'misha', 'ann',
 const spliceArr3 = ['tina', 'misha', 'ann', 'sonya']; // ['tina', 'misha', 'ann', 'sonya']
 
 const removedFromSpliceArr3 = spliceArr1.splice();  // []
+
+
+// ****************************************************************************************************************************************
+
+
+const spliceArr4 = ['tina', 'misha', 'ann', 'sonya']; // ['tina', 'misha', 'ann', 'sonya']
+
+const removedFromSpliceArr4 = spliceArr4.splice(-3, -2);  // []
+console.log(removedFromSpliceArr4);
+
 
 
 
@@ -1083,6 +1100,7 @@ at;                                     values;
 from;                                   entries;
 withh;
 isArray;                                filter;
+                                        concat
 
 push;                                   sort;
 pop;                                    splice;
@@ -1103,5 +1121,11 @@ reduceRight;
 
 find;
 findIndex;
+lastIndexOf;
 indexOf;
-includes;
+includess;
+
+
+
+
+console.log({foo:'bar'}.toString());

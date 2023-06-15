@@ -637,8 +637,1489 @@ newFunc('Grisha')
 
 
 
+const square = `First accomodation is 3m length and 5metres width. Height is 3 metres.But height is not important for us.
+                Kitchen is 6metres width and 4metres length. Bathroom 2metres length, 3metres width and 3 metres height. Count total square metres.`
+//
+function countSquareMetres (str){
+
+    let V1;
+    let V2;
+    let squares = 0;
+
+    for(let i = 0; i< str.length; i++){
+        const charCode = str[i].charCodeAt(0);
+        const isNum = charCode > 47 && charCode < 58;
+
+        if(isNum && str[i+1] === 'm' && !V1){
+            V1 = Number.parseInt(str[i])
+        }else if(isNum && str[i+1] === 'm' && !V2){
+            V2 = Number.parseInt(str[i])
+        }else if(V1 && V2){
+            squares+= V1 * V2;
+            V1 = undefined;
+            V2 = undefined;
+        }
+    }
+
+
+    return `The area of all rooms is equal to ${squares} square meters`
+
+}
+
+console.log(countSquareMetres(square));
+
+
+const findedFruits = `Our supplier uses TONN as the unit of measure. Yesterday he brought the following fruits - apples:50, pineapples:90, peaches:25, strawberries:150. Convert to KG`;
+
+const countTotalFruits = (str) => {
+    let k = 0.001;
+
+    let match = '';
+    let totalCount;
+    let supplierUnit = '';
+    let requiredUnit = str.endsWith('KG') ? 'KG': 'TONN';
+
+
+    for(let i = 0; i < str.length; i++) {
+        const charCode = str[i].charCodeAt(0);
+
+        if((match === 'KG' || match === 'TONN') && !supplierUnit){
+            supplierUnit = match;
+        }
+
+        if(charCode > 47 &&  charCode < 58 && supplierUnit){
+            match += str[i];
+        }else if(charCode === 32){
+            match = '';
+        }else if(!supplierUnit){
+            match += str[i];
+        }else if(supplierUnit && match.length){
+            const parsed = Number.parseInt(match);
+            totalCount = totalCount ? totalCount + parsed : parsed;
+            match = '';
+        }
+
+        
+    }
+    
+    if(supplierUnit === 'KG' && requiredUnit === 'TONN'){
+        return `${(totalCount * k)} ${requiredUnit}`
+    }else if (supplierUnit === 'TONN' && requiredUnit === 'KG'){
+        return `${totalCount / k} ${requiredUnit}`
+    }else{
+        return `${totalCount} ${requiredUnit}`
+    }
+
+
+
+}
+
+console.log(countTotalFruits(findedFruits));
+
+
+
+const nickStr = 'sanya like+bananas so(much';
+
+const convertToCamelCase = (str) => {
+
+    let converted = '';
+
+    for(let i = 0; i < str.length; i++){
+        const charCode = str[i].charCodeAt(0);
+        const dividerStatus = 
+              (charCode > 31 && charCode < 48) ||
+              (charCode > 57 && charCode < 65) ||
+              (charCode > 90 && charCode < 97)
+
+
+        if( dividerStatus){
+            converted+= str[i+1].toUpperCase();
+            i = i+1;
+        }else{
+            converted+=str[i]
+        }
+    }
+
+    return converted
+};
+
+console.log(convertToCamelCase(nickStr));
 
 
 
 
 
+const addStar = (str) => {
+
+    let res = '';
+
+    for(let i = 0; i < str.length; i++) {
+        if(!res) {res += str [i]; continue}
+        const prev = Number.parseInt(str[i - 1]);
+        const current = Number.parseInt(str[i]);
+
+        if(prev % 2 !== 0 && current % 2 !== 0){
+            res += '*' + current
+        }else{
+            res += str[i]
+        }
+
+    }
+
+    return res
+}
+console.log(addStar ('1111111111'));
+
+
+
+
+const codeString = (str) => {
+
+    const arr = [];
+
+    for(let i = 0; i < str.length; i++){
+        arr.push(str[i].charCodeAt(0).toString(2))
+    }
+    return arr.join(' ');
+}
+
+
+codeString(`How did you decipher this string?`);
+
+
+
+
+const coveredStr = '1001000 1101111 1110111 100000 1100100 1101001 1100100 100000 1111001 1101111 1110101 100000 1100100 1100101 1100011 1101001 1110000 1101000 1100101 1110010 100000 1110100 1101000 1101001 1110011 100000 1110011 1110100 1110010 1101001 1101110 1100111 111111'
+
+
+const fromCodeToStr = (str) => {
+    const splittedArr = str.split(' ');
+    let newStr = ''
+    for(let i = 0; i < splittedArr.length; i++){
+        newStr += String.fromCharCode(parseInt(splittedArr[i], 2))
+
+    }
+    return newStr
+}
+
+console.log(fromCodeToStr(coveredStr));
+
+
+
+
+const stickTwoStrings1 = (str1,str2) => {
+    if(str1 === str2) return str1
+    let res ;
+    const lastChar = str1.charCodeAt(str1.length-1);
+    for(let i = 0; i < str2.length; i++){
+        const charCode = str2[i].charCodeAt(0)
+        if((charCode  ===  lastChar) && !res){
+            res = str1
+        }else if(res){
+            res +=str2[i]
+
+        }
+    }
+    return res
+}
+console.log(stickTwoStrings1('abaabaab2', 'aa2baabab'));
+
+
+
+
+
+function stickTwoStrings2(first, second){
+
+   return first + second.slice(second.indexOf(first.at(-1))+1);
+    
+}
+
+console.log(  stickTwoStrings2('abaabaab2', 'aa2baabab'));
+
+
+
+
+
+
+const findPresents = (str, times,serched) => {
+
+    let sliced;
+    for(let i = 0; i < str.length; i++ ){
+        if(str[i] === serched){
+            sliced = str.slice(i, i + times)
+            break
+        }
+
+    }
+    return   sliced.startsWith(``.padStart(times, serched));
+}
+
+
+console.log(findPresents('asgdoooofervdooodgft', 4, 'o'));
+
+
+
+
+
+
+const transformStrToArr= (str) => {
+    const arr = [];
+    let i = 0;
+    for(let letter of str){
+        const charCode = letter.charCodeAt(0);
+        arr.push({
+            [`${charCode}`]: letter,
+            order: i++
+        })
+    }
+    return arr.sort(() => Math.floor(Math.random() * (1 - -1 + 1) + -1));
+}
+
+transformStrToArr('Return an array')
+
+
+
+const arrFortransformBackToString = [
+    { '121': 'y', order: 14 },
+    { '116': 't', order: 2 },
+    { '110': 'n', order: 8 },
+    { '101': 'e', order: 1 },
+    { '117': 'u', order: 3 },
+    { '114': 'r', order: 11 },
+    { '32': ' ', order: 9 },
+    { '82': 'R', order: 0 },
+    { '114': 'r', order: 4 },
+    { '97': 'a', order: 10 },
+    { '97': 'a', order: 7 },
+    { '110': 'n', order: 5 },
+    { '32': ' ', order: 6 },
+    { '97': 'a', order: 13 },
+    { '114': 'r', order: 12 }
+]
+
+const transformBackToString = (arr) => {
+    const sorted = arr.toSorted((a,b) => a.order - b.order);
+    return sorted.reduce((acc, next) => {
+        const key = Object.keys(next);
+        acc += String.fromCharCode(key[0])
+        return acc
+    }, '')
+
+}
+console.log(transformBackToString(arrFortransformBackToString));
+
+
+
+const makeTiers = (str) => {
+    let res = ''
+    for(let i = 0; i < str.length; i++){
+
+        // res += str.slice(0, i + 1 ) + ' ';
+
+        for(let j = 0; j <= i; j++ ){
+            res += str[j] 
+        }
+        res += ' ';
+    }
+    return `<${str}> Tiers are: ${res}`
+}
+
+console.log(makeTiers('420'));
+
+
+
+
+
+
+// =========================================================================================================================
+
+
+function isPangram(string){
+    
+    const lowerd = string.toLowerCase()
+
+    for(let i = 'a'; i <= 'z'; i = String.fromCharCode(i.charCodeAt(0)+1)){
+        if (!lowerd.includes(i)){
+            return false
+        }
+    }
+
+    return true
+}
+
+console.log(isPangram('This is not a pangram.'));
+
+
+
+function findUniq(arr) {
+
+    return arr.filter((item, i,arr) => arr.indexOf(item) === arr.lastIndexOf(item))[0]
+
+}
+
+console.log(findUniq([   0, 0, 1]));
+
+
+
+function solution(str){
+
+    const arr = [];
+    for(let i = 0; i < str.length; i= i+2){
+        let res = '';
+        for(let j = i; j < i+2; j++){
+            if(str[j] === undefined){res += '_'; break}
+            res += str[j];
+        }
+
+        arr.push(res)
+    }
+
+    return arr;
+}   
+
+solution('abcdef')
+
+
+
+function sortArray(array) {
+    const originalArr = [...array];
+    const removed = [];
+
+    for(let i = 0; i < array.length; i++){
+        if(array[i] % 2 !== 0){
+            removed.push(array[i])
+            delete originalArr[i];
+
+        }
+    }
+
+    removed.sort((a,b) => a-b)
+    let iterator = 0;
+    for(let i = 0; i< originalArr.length; i++){
+        if(originalArr[i] === undefined){
+            originalArr[i] = removed[iterator];
+            iterator++
+        }
+    }
+
+    return originalArr
+}
+
+
+console.log(sortArray([5, 3, 1, 8, 0]));
+
+
+
+
+function findMissingLetter(array){
+
+    let found ;
+    const res = array.reduce((acc,next) => {
+        const charCodeAcc = acc.charCodeAt(0);
+        const charCodeNext = next.charCodeAt(0);
+
+        if(charCodeAcc !== charCodeNext - 1 && !found){
+            found = String.fromCharCode(charCodeNext - 1);
+        }
+        
+        return acc= next
+    })
+    return found
+}
+
+
+console.log(findMissingLetter(['O','Q','R','S']));
+
+
+
+function towerBuilder(nFloors) {
+    let strFloor = [];
+
+
+    for( let i = 1; i <= nFloors; i++){
+        let str = '';
+        for(let j = 1; j <= i*2-1; j++){
+            str += '*'
+        }
+        for(let k = 1; k <=nFloors-i; k++){
+            str = ' ' + str
+        }
+        for(let l = 1; l <=nFloors-i; l++){
+            str = str + ' '
+        }
+
+        strFloor.push(`${str}`)
+
+    }
+
+    return strFloor
+
+}
+
+
+towerBuilder(10)
+
+
+
+function wordsToHex(words) {
+
+    const splittedArr = words.split(' ');
+    const resArr = [];
+
+    for(let i = 0; i < splittedArr.length; i++){
+        let str = '#';
+        for(let j = 0; j < 3; j++){
+            if(!splittedArr[i][j]) break
+            const charCode = splittedArr[i][j].charCodeAt(0).toString(16);
+            str+= charCode
+        }
+
+        str = str.padEnd(7, '0');
+        resArr.push(str);
+    }
+
+    return resArr
+}
+
+
+wordsToHex("Hello, my name is Gary and I like cheese.");
+
+
+
+const inData = 'user.name.firstName=Bob&user.name.lastName=Smith&user.favouriteColor=Light Blue&experiments.theme=dark';
+
+const makeObjFromUrl = (url) => {
+    const resObj = {}
+    const splited = url.split('&').map(item => item.split('='));
+
+    splited.forEach((item,i) => {
+        let currentObj = resObj;
+        const route = item[0].split('.');
+    
+        route.forEach( path => {
+            if(!currentObj[path] && path !== route.at(-1)){
+                currentObj[path] = {};
+                currentObj = currentObj[path];
+            }else if(path === route.at(-1)){
+                currentObj[path] = item[1]
+            }
+        })
+    })
+    console.log(resObj);
+}
+
+makeObjFromUrl(inData);
+
+
+
+
+
+
+
+function high(x){
+
+    const alphabet = {
+        a: 1,
+        b: 2,
+        c: 3,
+        d: 4,
+        e: 5,
+        f: 6,
+        g: 7,
+        h: 8,
+        i: 9,
+        j: 10,
+        k: 11,
+        l: 12,
+        m: 13,
+        n: 14,
+        o: 15,
+        p: 16,
+        q: 17,
+        r: 18,
+        s: 19,
+        t: 20,
+        u: 21,
+        v: 22,
+        w: 23,
+        x: 24,
+        y: 25,
+        z: 26
+    };
+    
+    const points = {};
+
+    x.split(' ').forEach((item,i) => {
+        let score = 0;
+        for(let l of item){
+            score += alphabet[l];
+        }
+
+        points[item] = score;
+
+    }) 
+    
+    
+    return Object.entries(points).sort((a,b) => b[1] - a[1])[0][0];
+}
+
+
+high('d bb');
+
+
+
+
+
+
+function deleteNth(arr,n){
+    
+    const obj = {};
+    const arrRes = []
+    for(let i = 0; i < arr.length; i++){
+
+        if(!obj[arr[i]]){
+            obj[arr[i]] = 1;
+            arrRes.push(arr[i]);
+        }else if(obj[arr[i]] && obj[arr[i]] < n){
+            obj[arr[i]] += 1;
+            arrRes.push(arr[i]);
+        }else{
+            continue;
+        }
+
+    }
+
+    return arrRes;
+    
+}
+
+deleteNth([1,1,3,3,7,2,2,2,2], 3)
+
+
+
+
+
+function countSmileys(arr) {
+
+    const str = arr.join(' ');
+    return [...str.matchAll(/[:|;][~-]?[)|D]/mg)].length || 0;
+
+
+
+
+
+}
+
+console.log(countSmileys([":-)" , ";~D" , ":-D" , ":_D"]));
+
+
+
+
+
+function dirReduc(arr){
+
+    const LOGIC = {
+        NORTH:'SOUTH',
+        SOUTH:'NORTH',
+        WEST:"EAST",
+        EAST:"WEST"
+    };
+    for(let i = 0; i < arr.length; i++){
+        if(arr[i] === LOGIC[arr[i+1]]){
+            arr.splice(i, 2);
+            i = -1
+        }
+    }
+
+    return arr;
+}
+
+console.log(dirReduc(["NORTH", "SOUTH", "EAST", "WEST", "EAST", "WEST"]));
+
+
+
+
+function zero(func) {
+    const num = 0
+    if(!func){
+        return num
+    }else{
+        return func(num)
+    }
+}
+function one(func) {
+    const num = 1
+    if(!func){
+        return num
+    }else{
+        return func(num)
+    }
+}
+function two(func) {
+    const num = 2
+    if(!func){
+        return num
+    }else{
+        return func(num)
+    }
+}
+function three(func) {
+    const num = 3
+    if(!func){
+        return num
+    }else{
+        return func(num)
+    }
+}
+function four(func) {
+    const num = 4
+    if(!func){
+        return num
+    }else{
+        return func(num)
+    }
+}
+function five(func) {
+    const num = 5
+    if(!func){
+        return num
+    }else{
+        return func(num)
+    }
+}
+function six(func) {
+    const num = 6
+    if(!func){
+        return num
+    }else{
+        return func(num)
+    }
+}
+function seven(func) {
+    const num = 7
+    if(!func){
+        return num
+    }else{
+        return func(num)
+    }
+}
+function eight(func) {
+    const num = 8
+    if(!func){
+        return num
+    }else{
+        return func(num)
+    }
+}
+function nine(func) {
+    const num = 9
+    if(!func){
+        return num
+    }else{
+        return func(num)
+    }
+}
+
+function plus(n) {
+    const operated = n;
+    return (a) => a + operated
+}
+function minus(n) {
+    const operated = n;
+    return (a) => a - operated
+}
+function times(n) {
+    const operated = n;
+    return (a) => a * operated
+}
+function dividedBy(n) {
+    const operated = n;
+    return (a) => Math.floor(a / operated)
+}
+
+
+console.log(seven(times(five())));
+
+
+
+
+function rot13(message){
+    let resStr = '';
+    for(let l of message){
+        let charCode = l.charCodeAt(0);
+
+        if(charCode > 64 && charCode < 91){
+            if(charCode + 13 > 90){
+                charCode = ((charCode + 13) % 90) + 64;
+            }else{
+                charCode += 13
+            }
+
+        }else if(charCode > 96 && charCode < 123){
+            if(charCode + 13 > 122){
+                charCode = ((charCode + 13) % 122) + 96;
+            }else{
+                charCode += 13
+            }
+        }
+
+        resStr += String.fromCharCode(charCode);
+    }
+
+    return resStr;
+
+}
+
+
+console.log(rot13('Ruby is cool!'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ================================LESSON START============================================
+
+
+
+
+
+var a = [5,6,7];
+var b = {
+    0:5,
+    1:6,
+    2:7,
+};
+var c = {};
+c['z'] = false;
+c['c'] = true;
+c['a'] = false;
+c['x'] = true;
+
+// {
+//     false: ['z', 'a']
+//     true: ['c', 'x'],
+// }
+
+
+const grouppedByValue = (obj) => {
+
+    return Object.keys(obj).reduce((output,key) => {
+        const outputKey = c[key];
+        if(!output[outputKey]){
+            output[outputKey] = [];
+        }
+
+        output[outputKey].push(key)
+
+
+        return output
+    },{})
+
+
+}
+
+
+console.log(grouppedByValue(c));
+
+
+
+const operator = "+";
+
+const arrOfNumbers = [
+    [1,2,3],
+    [4,5,6, [7, 8, 9, [10, 11, 12, [13, 14, 15, [16, 17, 18, [19, 20, [21, 22, 23, 24]]]]]]]
+];
+console.time('proceedNumbers');
+  
+  const proceedNumbers = (numbersList, operator) => {
+    const flatNumbersArr = numbersList.flat(Infinity);
+    let result = 0;
+    if(operator === '+'){
+        for(let n of flatNumbersArr){
+            result += n
+        }
+    }else if( operator === '-' ){
+        for(let i = 0; i < flatNumbersArr.length; i++){
+            if(i === 0) {
+                result = [flatNumbersArr[i]]
+            }else{
+                result -= flatNumbersArr[i]
+            };
+
+        }
+    }else if(operator === '*') {
+        for(let i = 0; i < flatNumbersArr.length; i++){
+            if(i === 0) {
+                result = [flatNumbersArr[i]]
+            }else{
+                result *= flatNumbersArr[i]
+            };
+
+        }
+    }else if(operator === '/'){
+        for(let i = 0; i < flatNumbersArr.length; i++){
+            if(i === 0) {
+                result = [flatNumbersArr[i]]
+            }else{
+                result /= flatNumbersArr[i]
+            };
+
+        }
+    }
+    return result
+};
+proceedNumbers(arrOfNumbers, operator)
+console.timeEnd('proceedNumbers');
+
+
+console.time('proceedNumbers2');
+const proceedNumbers2 = (numbersList, operator) => {
+    if(!Array.isArray(numbersList)) return NaN
+
+    const whiteList = ['+', '-', '/', '*'];
+    if(!whiteList.includes(operator)){
+        return NaN
+    }
+    const numbers = numbersList.flat(Infinity).filter((value) => typeof value === 'number');
+    if(!numbers.length) return NaN
+
+    return eval(numbers.join(operator));
+}   
+proceedNumbers2(arrOfNumbers, operator);
+console.timeEnd('proceedNumbers2');
+
+
+class Test {}
+const myClass = new Test();
+
+const isObject = (data) => {
+    
+    return data?.constructor?.name === 'Object'
+
+
+}
+console.log(isObject(undefined));
+
+
+
+const arr = [{value: 1}, {value: 2}, 5, 6,null,true,  7, 'test', 'test2', 'test3', 'test4', false, null, undefined, [123], [456], new Date("2021-06-22"), new Date("2022-02-01"), new Set([1,2,3]), new Set([4,5,6]), Symbol(), Symbol(), Symbol(), new Map()];
+
+function groupByDataType(data) {
+
+    return data.reduce((output, item) => {
+        let type = item?.constructor?.name || typeof item;
+
+        if(item === null){
+            type = 'null';   
+        }
+
+        if(!output[type]){
+            output[type] = []
+        }
+
+            output[type].push(item)
+        
+
+
+        return output
+    }, {})
+
+}
+
+
+
+/* написать функцию getSortedString, которая объединит все символы в алфавитном порядке без дубликатов. Запрещено использовать sort, 
+запрещено использовать цикл в цикле, запрещено использовать рекурсии, запрещено явно использовать 2 или более цикла типа for, while, f
+ilter, map, reduce, etc. */
+
+// результат функции 'abcdefghxyz'"
+
+
+
+const data = ['abc', 'def', 'xzy', 'yz', 'fgh'];
+
+function getSortedString(data) {
+    const strFromArr = data.join('');
+
+    const resObj = {};
+    for(let i = 0; i < strFromArr.length; i++){
+        const charCode = strFromArr[i].charCodeAt(0);
+
+        resObj[charCode] = strFromArr[i];
+        
+
+
+
+    }
+    return Object.values(resObj).join('')
+     
+}
+console.log(getSortedString(data));
+// 
+
+console.log(groupByDataType(arr));
+console.log(new Map().constructor?.name);
+// Ожидаемый результат
+// {
+//   object: [ { value: 1 }, { value: 2 } ],
+//   number: [ 5, 6, 7 ],
+//   string: [ 'test', 'test2', 'test3', 'test4' ],
+//   boolean: [ false ],
+//   null: [ null ],
+//   undefined: [ undefined ],
+//   array: [ [ 123 ], [ 456 ] ],
+//   date: [new Date(""2021-06-22""), new Date(""2022-02-01"")],
+//   set: [new Set([1,2,3]), new Set([4,5,6])],
+//   symbol: [Symbol(), Symbol(), Symbol()],
+//   map: [new Map()]
+// }
+
+
+
+
+// console.log(Object.entries(a));
+// console.log(Object.entries(b));
+
+
+// const d = [];
+// d['z'] = true;
+// d['c'] = true;
+// d['j'] = true;
+// console.log(Object.keys(d));
+
+
+
+// c[Symbol(d)] = true;
+
+// console.log(c[Symbol(d)]);
+
+
+// const generateOBj = (num) => {
+//     const res = Array.from({length: num}, (item, i) => {
+//         return {foo:'bar'}
+//     })
+//     return res
+// }
+
+// const someArr = generateOBj(5)
+// console.log(someArr[1] === someArr[3]);
+
+
+
+
+
+
+const data1 = {
+    a: 1,
+    x: null,
+    k: [1, 2],
+    b: 2,
+    c: {
+        d: 1,
+        e: {
+            s: {
+                f: {
+                    v: 4,
+                },
+            },
+        },
+    },
+};
+
+const data2 = [
+    {
+        a: 1,
+        x: null,
+        k: [1, 2],
+        b: 2,
+        c: {
+            d: 1,
+            e: {
+                s: {
+                    f: {
+                        v: 4,
+                    },
+                },
+            },
+        },
+    },
+];
+function deepClone(data) {
+    // const stack = [data];
+    // let inner =  Array.isArray(data) ? [] : {};
+    // let clone = inner;
+
+    // while(stack.length){
+    //     const current = stack.pop();
+    //     const target = clone;
+
+    //     const currentKeys = Object.keys(current);
+    //     for(let key of currentKeys){
+    //         const value = current[key];
+    //         if(typeof value === 'object' && value !== null) {
+    //             inner[key] = Array.isArray(value) ? [] : {};
+    //             stack.push(value);
+    //             inner = inner[key];
+    //         }else{
+    //             inner[key] = value
+    //         }
+    //     }
+    // }
+
+    let stack = [{ source: data, target: Array.isArray(data) ? [] : {} }];
+    let clone = stack[0].target;
+
+    while (stack.length) {
+        const { source, target } = stack.pop();
+        const sourceKeys = Object.keys(source);
+
+        for (let key of sourceKeys) {
+            let value = source[key];
+            if (typeof value === "object" && value !== null) {
+                target[key] = Array.isArray(value) ? [] : {};
+                stack.push({ source: value, target: target[key] });
+            } else {
+                target[key] = value;
+            }
+        }
+    }
+
+    return clone;
+}
+
+const cloned = deepClone(data1);
+console.log(cloned);
+
+
+
+// ================================LESSON END============================================
+
+const findEmails = 'We received a few emails: Tina - tina@gmail.com, Misha - toronto2v2@icloud.com, Sania - sania@some.gmail.online But Pavlo provide incorect - P@some.bademailfromPava';
+
+
+function findAllValidEmails(str = findEmails) {
+    const regExp = /\w+@(\w+\.)+\w{2,12}\b/g;
+    console.log(str.match(regExp));
+}
+
+findAllValidEmails();
+
+
+
+const findCapital = 'We received a few emails: Tina - tina@gmail.com, Misha - toronto2v2@icloud.com, Sania - sania@some.gmail.online But Pavlo provide incorect - P@some.bademailfromPava';
+function findWordsFromCapital (str = findCapital){
+
+    const regExp = /[A-Z]\w+\b/g
+    console.log(str.match(regExp));
+}
+
+findWordsFromCapital()
+
+
+
+// Перевірити чи в рядку є тільки букви і числа
+
+const checkForNumAndLetStr = 'this string contains only letters spaces and numbers 5 6 7 8';
+function checkForNumAndLetters (str=checkForNumAndLetStr){
+
+    const regExp = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9 ]+$/ig
+
+}
+
+checkForNumAndLetters()
+
+const checkForHashtags = '#somehash22. Some guys provide best hash: #pay4life, #pay2pay. ';
+
+const removeHashtags = (str = checkForHashtags) => {
+
+    const regExp = /#\w+/gi
+    console.log(str.match(regExp));
+
+}
+
+removeHashtags()
+
+
+
+// зробити валідацію пароля. Має бути мінімум одна велика буква, мінімум одна маленька, мінімум одне число і один спецсимвол Довжина має бути більше 12 символів
+
+const validatePassStr = `toronto2V2paSS`;
+
+const validatePass = (str) => {
+
+    const regExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_])(?=.*[0-9]).+[a-zA-Z0-9\W_]{11,}$/gm
+    return regExp.test(str);
+
+}
+
+validatePass();
+
+
+const findPhonesStr = '+38 (066) 113-72-10. Tania phone is 0995650382. Vasua phone is 380660820648.'
+
+const findPhoneNumbers = (str) => {
+
+    const regExp = /\+?\d+[0-9\-()\s]{8,16}\d/gi
+    console.log(str.match(regExp));
+}
+
+findPhoneNumbers(findPhonesStr);
+
+
+
+
+const dublicatesStr = 'alpha beta beta gamma gamma gamma delta alpha beta beta gamma gamma gamma delta';
+
+const removeRepeated = (str) => {
+
+    return str.match(/(\w+)(?!.*\1)/gi).join(' ')
+
+}
+
+console.log(removeRepeated(dublicatesStr));
+
+
+
+
+const strForEncoding = 'How are you today?';
+
+const encodeStr = (str) => {
+    const vowels = ['a','e','i','o','u'];
+    return str.replaceAll(/[aeiou]/g, (m) => vowels.indexOf(m)+1)
+}
+
+console.log(encodeStr(strForEncoding));
+
+const decodeStr = (str) => {
+    const vowels = ['a','e','i','o','u'];
+    return str.replaceAll(/[0-5]/g, (m) => vowels[m-1])
+};
+
+console.log(decodeStr(encodeStr(strForEncoding)));
+
+
+
+
+function validPhoneNumber(phoneNumber){
+
+    return /^\(\d{3}\)\s\d{3}-\d{4}$/gi.test(phoneNumber)
+
+
+}
+
+console.log(validPhoneNumber('(1111)555 2345'));
+
+
+function generateHashtag (str) {
+    if(!str) return false
+    const replacedStr = str.replaceAll(/\s+|\w+/gi, (m) => {
+        if(m.includes(' ')) return '';
+        return m[0].toUpperCase() + m.slice(1)
+    })
+    if(!replacedStr || replacedStr.length >= 140) return false
+    return '#' + replacedStr
+}
+
+
+console.log(generateHashtag("some" + " ".repeat(140) + "queu"));
+
+
+
+
+
+
+// Задачки
+const timeToBirthDay = () => {
+
+    const today = new Date();
+    const birthday = new Date(today.getFullYear(), 10, 20,0);
+    const dateDiff = birthday - today;
+
+    const msInMonth = 1000 * 60 * 60 * 24 * 30,
+          msInDay = 1000 * 60 * 60 * 24,
+          msInHour = 1000 * 60 * 60,
+          msInMinute = 1000 * 60 * 60,
+          msInSecond = 1000
+
+    const monthLeft = Math.floor(dateDiff / msInMonth),
+          daysLeft = Math.floor(dateDiff / msInDay) % 30,
+          hoursLeft = Math.floor(dateDiff / msInHour) % 24,
+          minutesLeft = Math.floor(dateDiff / msInMinute) % 60,
+          secondsLeft = Math.floor(dateDiff / msInSecond) % 60
+
+    return `Left: ${monthLeft} month; ${daysLeft} days; ${hoursLeft} hours; ${minutesLeft} minutes; ${secondsLeft} seconds`;
+}
+
+console.log(timeToBirthDay());
+
+
+
+function makeKebab(str) {
+    str = str.replace(str[0], str[0].toLowerCase())
+    return str.replace(/[A-Z0-9]/g, m => {
+        if(+m){
+            return ''
+        }else{
+            return `-${m.toLowerCase()}`
+        }
+    })
+}
+
+console.log(makeKebab('SomeCa6melCaseButNo3wKebAGab'));
+
+
+
+
+const convertToObject = (str) => {
+    const splittedStr = str.split('|');
+    return splittedStr.reduce((output, person) => {
+        const [name,thing] = person.split(':');
+        const value = output[name];
+
+        value ? output[name] = [...value, thing] : output[name] = [thing]
+
+
+        return output
+    },{});
+
+}
+
+
+console.log(convertToObject('Misha:ball|Sania:blanket|Ann:music|Mark:timber|Tina:food|Mark:chips'));
+
+
+
+
+const flatByStack = (arr) => {
+    const queu = [...arr];
+    const flattenedArr = [];
+
+    while(queu.length){
+        const current = queu.shift();
+        if(Array.isArray(current)){
+            queu.unshift(...current);
+            continue;
+        }
+        flattenedArr.push(current);
+    }
+
+    return flattenedArr
+
+} 
+
+console.log(flatByStack([undefined, 2, [null, 4, ['some', 6, [7, new Set(), [9, {foo:'bar'}]]]]]));
+
+
+
+const convertToRoman = (num) => {
+    let initialNuber = num;
+    const  romanObj = {M:1000,CM:900, D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1 };
+    let result = '';
+
+    while(initialNuber > 0){
+        for(const n in romanObj){
+            if(initialNuber >= romanObj[n]){
+                result += n;
+                initialNuber -= romanObj[n];
+                break;
+            }
+        }
+    }
+    return result
+}
+
+
+console.log(convertToRoman(2314));
+
+
+const convertToArabic = (num) => {
+    const romanObj = {M:1000,CM:900, D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1 };
+
+    let result = 0;
+    let i = 0;
+
+    while (i < num.length) {
+        const currentSymbol = num[i];
+        const nextSymbol = num[i + 1];
+
+        if (nextSymbol && romanObj[currentSymbol + nextSymbol]) {
+            result += romanObj[currentSymbol + nextSymbol];
+            i += 2;
+        } else {
+            result += romanObj[currentSymbol];
+            i += 1;
+        }
+    }
+
+    return result;
+};
+
+
+
+console.log(convertToArabic('MMCCCXIV'));
+
+
+
+
+
+
+
+
+const flatObjects = (...args) => {
+   return args.reduce((output, next) => {
+        const nextKeys = Object.keys(next);
+        for(const key of nextKeys){
+            if(!output[key] && output[key]!== null &&output[key]!== false){
+                output[key] = next[key];
+
+            }
+        }
+    return output
+   }, {})
+}
+
+console.log(flatObjects({a: false,e:'some', b: null}, {a: true, b: 2, c: 3}, {a: 3, c: 3214,d:5}));
+
+
+
+
+
+
+const conversionK = {
+    m: {
+      cm: 100,
+      ft: 3.28084,
+      mi: 0.000621371,
+      in: 39.3701,
+      yd: 1.09361,
+      km: 0.001,
+      m: 1,
+    },
+    cm: {
+      m: 0.01,
+      ft: 0.0328084,
+      mi: 0.00000621371,
+      in: 0.393701,
+      yd: 0.0109361,
+      km: 0.00001,
+      cm: 1,
+    },
+    ft: {
+      m: 0.3048,
+      cm: 30.48,
+      mi: 0.000189394,
+      in: 12,
+      yd: 0.333333,
+      km: 0.0003048,
+      ft: 1,
+    },
+    mi: {
+      m: 1609.34,
+      cm: 160934,
+      ft: 5280,
+      in: 63360,
+      yd: 1760,
+      km: 1.60934,
+      mi: 1,
+    },
+    in: {
+      m: 0.0254,
+      cm: 2.54,
+      ft: 0.0833333,
+      mi: 0.0000157828,
+      yd: 0.0277778,
+      km: 0.0000254,
+      in: 1,
+    },
+    yd: {
+      m: 0.9144,
+      cm: 91.44,
+      ft: 3,
+      mi: 0.000568182,
+      in: 36,
+      km: 0.0009144,
+      yd: 1,
+    },
+    km: {
+      m: 1000,
+      cm: 100000,
+      ft: 3280.84,
+      mi: 0.621371,
+      in: 39370.1,
+      yd: 1093.61,
+      km: 1,
+    },
+  };
+
+const convertDistances = (valueObj, k) => {
+    const {convertTo, distance:{unit, value}} = valueObj;
+    return {"unit": convertTo, "value": value * k[unit][convertTo].toFixed(1)}
+}
+
+console.log(convertDistances({"distance": {"unit": "mi", "value": 1}, "convertTo": "km"}, conversionK));
+
+
+
+
+const hashStr = "Hey guys. Yesterday #party#nice was awesome. #Coctails tastes better than previous time. I had so #GoodTime!";
+
+debugger
+const sliceHashtags = (str) => {
+    const hashTags = [];
+    const dividers = ['!',',',' ', '.', '#'];
+
+    for(let i = 0; i < str.length; i++){
+        if(str[i] === '#'){
+            let hashtag = '#';
+            for(let j = i+1; !dividers.includes(str[j]) ;j++){
+                hashtag += str[j]
+            }
+            hashTags.push(hashtag);
+        }
+    }
+    return hashTags
+}
+
+console.log(sliceHashtags(hashStr));
+
+
+
+
+function changeLetters(message) {
+    let resStr = "";
+    for (let l of message) {
+        let charCode = l.charCodeAt(0);
+
+        if (charCode > 64 && charCode < 91) {
+            if (charCode + 5 > 90) {
+                charCode = ((charCode + 5) % 90) + 64;
+            } else {
+                charCode += 5;
+            }
+        } else if (charCode > 96 && charCode < 123) {
+            if (charCode + 5 > 122) {
+                charCode = ((charCode + 5) % 122) + 96;
+            } else {
+                charCode += 5;
+            }
+        }
+
+        resStr += String.fromCharCode(charCode);
+    }
+
+    return resStr;
+}
+
+console.log(changeLetters('misha'));

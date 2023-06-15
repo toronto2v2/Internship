@@ -1,41 +1,27 @@
-const text1 = 'Mike received $159,34, good job man. Lisa received $95,59 but Kate received $140,12-winner. Platform deposit $950,81 was made at the beginning of March. How much money is left on the platform?';
 
-// expected result
-// 950.81 - 140.12 - 95.59 - 159.34 = 555.76
+function towerBuilder(nFloors) {
+    let strFloor = [];
 
-// Выполнить задачу с помощью цикла for
-// Запрещено использовать for внутри for
-// Запрещено использовать метод .split
-// Запрещено использовать любые регулярные выражения (RegExp)
-// Запрещены рекурсии
 
-function countPlatformBalance(message) {
-
-    let numbers = '';
-    let deposit = undefined;
-
-    for(let i = message.length -1; i >= 0; i-- ){
-        const charCode = message[i].charCodeAt(0);
-        if(charCode > 47 &&  charCode < 58){
-            numbers = message[i] + numbers;
-        }else if(charCode === 44 ){
-            numbers = '.' + numbers
-        }else if(numbers.length){
-
-            const parsed = Number.parseFloat(numbers);
-            deposit = deposit ? deposit - parsed : parsed;
-            numbers = '';
-
+    for( let i = 1; i <= nFloors; i++){
+        let str = '';
+        for(let j = 1; j <= i*2-1; j++){
+            str += '*'
+        }
+        for(let k = 1; k <=nFloors-i; k++){
+            str = ' ' + str
+        }
+        for(let l = 1; l <=nFloors-i; l++){
+            str = str + ' '
         }
 
-
+        strFloor.push(`${str}`)
 
     }
 
-    return +deposit.toFixed(2)
+    return strFloor
 
 }
 
-console.log(
-   countPlatformBalance(text1),
-);
+
+towerBuilder(10)
