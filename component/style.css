@@ -1,0 +1,56 @@
+
+.main__wrapper{
+    position: fixed;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translatey(-50%);
+}
+.component__wrapper{
+    padding: 10px;
+    margin: 0 auto;
+    border-radius: 20px;
+    width: 50%;
+    height: 25px;
+    background-color:#a5e9dc;
+    display: flex;
+}
+
+.emptyElement{
+    border-radius: 50%;
+    background-color: transparent;
+    height: 100%;
+}
+
+.elementTogether{
+    min-width: 25px;
+    height: 100%;
+    border-radius: 50%;
+    background-color:#00b886;
+
+}
+
+.normalElement{
+    min-width: 25px;
+    height: 100%;
+    border-radius: 50%;
+    background-color:#00b886;
+}
+
+
+@media (max-width: 900px){
+    .component__wrapper{
+        width: 90%;
+    }
+}
+
+@media (max-width: 400px){
+
+    .elementTogether, .normalElement{
+        min-width: 20px;
+        height: 20px;
+    }
+    .component__wrapper{
+        align-items: center;
+    }
+}

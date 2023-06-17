@@ -1517,25 +1517,19 @@ console.log(isObject(undefined));
 const arr = [{value: 1}, {value: 2}, 5, 6,null,true,  7, 'test', 'test2', 'test3', 'test4', false, null, undefined, [123], [456], new Date("2021-06-22"), new Date("2022-02-01"), new Set([1,2,3]), new Set([4,5,6]), Symbol(), Symbol(), Symbol(), new Map()];
 
 function groupByDataType(data) {
-
     return data.reduce((output, item) => {
         let type = item?.constructor?.name || typeof item;
 
-        if(item === null){
-            type = 'null';   
+        if (item === null) {
+            type = "null";
         }
 
-        if(!output[type]){
-            output[type] = []
+        if (!output[type]) {
+            output[type] = [];
         }
-
-            output[type].push(item)
-        
-
-
-        return output
-    }, {})
-
+        output[type].push(item);
+        return output;
+    }, {});
 }
 
 
@@ -1941,7 +1935,7 @@ const convertToRoman = (num) => {
 }
 
 
-console.log(convertToRoman(2314));
+console.log(convertToRoman(34));
 
 
 const convertToArabic = (num) => {
@@ -1968,7 +1962,7 @@ const convertToArabic = (num) => {
 
 
 
-console.log(convertToArabic('MMCCCXIV'));
+console.log(convertToArabic('XXXIV'));
 
 
 
@@ -2075,7 +2069,6 @@ console.log(convertDistances({"distance": {"unit": "mi", "value": 1}, "convertTo
 
 const hashStr = "Hey guys. Yesterday #party#nice was awesome. #Coctails tastes better than previous time. I had so #GoodTime!";
 
-debugger
 const sliceHashtags = (str) => {
     const hashTags = [];
     const dividers = ['!',',',' ', '.', '#'];
@@ -2123,3 +2116,354 @@ function changeLetters(message) {
 }
 
 console.log(changeLetters('misha'));
+
+
+
+function uniqWordsFinder(arr) {
+    return arr.filter((item, i,arr) => arr.indexOf(item) === arr.lastIndexOf(item))[0]
+}
+
+console.log(uniqWordsFinder(['s','s','s','s','s','d',]));
+
+
+
+const sortArr = (arr) => {
+    return arr
+        .map((letter) => letter.normalize("NFD"))
+        .toSorted((a, b) => {
+            if (a < b) {
+                return -1;
+            }
+            if (a > b) {
+                return 1;
+            }
+
+            return 0;
+        });
+};
+
+console.table(sortArr(['h', 's', 'ĥ', 'æ', 'ș', 'ae', 'g', 'ġ']));
+
+
+
+const bubbleSort = (arr) => {
+    const arrCopy = [...arr]
+
+    for(let j = 0; j < arrCopy.length; j++){
+        for(let i = 0; i < arrCopy.length - 1 - j ; i++){
+            if(arrCopy[i] > arrCopy[i+1]){
+                const buff = arrCopy[i];
+                arrCopy[i] = arrCopy[i+1]
+                arrCopy[i+1] = buff;
+            }
+        } 
+    }
+    console.log(arrCopy);
+};
+
+bubbleSort([
+    -332, -491, -196, 175, -44, 311, 110, 224, 180, 176, -74, 250, -296, 200,
+    420, -474, -127, 403, 234, 140, 484, -71, -58, -379, -125, 78, -258, -166,
+    -68, -263, 273, 205, 295, -95, 214, -25, 44, 325, -340, -339, -349, 494,
+    150, -174, 99, -338, 429, 328, 438, 141, -238, 456, 40, 339, -228, -245,
+    -95, 361, 200, 264, 288, -365, 0, -260, -297, 50, -416, -465, 109, -218,
+    444, -192, 92, -244, 42, 483, -127, 386, 434, -99, 428, 272, 184, -2, 488,
+    -268, -176, -311, 318, -23, 100, -435, 230, 555, 445, 428, 258, 404, -4,
+    268,
+]);
+
+
+
+
+
+
+const text23 = 'Hello Mike. Here is my phone number +38 (098) 330-00-03, my wife phone number 068-339-09-09 and my sun number 0683390791, and the last one (067) 330-20-11. Please use same country code +38 to have opportunity to call me'
+
+// output
+// ['+38 (098) 330-00-03', '068-339-09-09', '0683390791', '(067) 330-20-11']
+
+
+const findNumbers = (str) =>{
+
+    const regExp = /[\(\+]?\d+[0-9\-()\s]+\d/gi
+
+    const match = str.match(regExp);
+
+    return match
+
+} 
+
+console.log(findNumbers(text23));
+
+
+
+const str = 'Hello team. Today I bought a lot of  :apple::apple::apple: and I would like to share them with you.  <@Viktor/><@kate/>received:apple::apple::apple:, <@max/>:apple:<@Kate/>:apple:<@Max />:apple:<@Kate />:apple: <@viktor /><@Max /><@Kate /> also got rest:apple::apple:. <@Viktor /><@Kate /><@Max /> Thank you all. <@Max /> you are cool guy. <@Kate /> do not use :apple, apple, apple: and : apple :'
+
+
+// expected result
+// {
+//     viktor: 5,
+//     kate: 7,
+//     max: 4
+// }
+// ':apple:', 'viktor',  'Max',
+//   'Kate',    ':apple:', ':apple:',
+
+const findApples = (str) => {
+    const regexp = /(?<=@)\w+|:apple:/gi;
+    const matches = str.match(regexp);
+    let quant = 0;
+
+    return matches.reduceRight((output, next,i,initialArr) => {
+
+        if(next === ':apple:'){
+            quant++;
+        }else{
+            const name = next.toLowerCase();
+
+            if(!output[name]) {
+                output[name] = 0;
+                output[name] += quant;
+            }else{
+                output[name] += quant;
+            };
+
+            if(initialArr[i-1] === ':apple:') quant = 0
+        }
+
+
+
+
+        return output
+    },{})
+}
+
+console.log(findApples(str));
+
+
+
+
+
+
+
+
+
+
+const spreadTrafficEvenly = (bannersArr) => {
+    let initialIndex = 0;
+    for(let i = 0; i < bannersArr.length; i++){
+        if(bannersArr[i].show < bannersArr[initialIndex].show){
+            initialIndex = i;
+        }
+
+    }
+    bannersArr[initialIndex].show++;
+
+}
+
+
+
+
+
+
+const spreadTrafficEvenly2 = (bannersArr) => {
+    const sorted = bannersArr.toSorted((a,b) => a.show - b.show);
+    sorted[0].show++;
+}
+
+
+const spreadTrafficEvenly3 = (bannersArr) => {
+
+    const banner = bannersArr[Math.floor(Math.random()*bannersArr.length)];
+    banner.show++;
+}
+
+
+
+// const ads = [
+//     { name: "ad1", price: 1.8, show: 0},
+//     { name: "ad2", price: 1.75, show: 0 },
+//     { name: "ad3", price: 1.33, show: 0 },
+//     { name: "ad4", price: 0.48, show: 0 },
+// ];
+
+// console.time('first');
+// for(let i = 0; i < 1000000; i++ ){
+
+//     spreadTrafficEvenly(ads);
+// }
+// console.timeEnd('first');
+
+
+
+
+// const ads2 = [
+//     { name: "ad1", price: 1.8, show: 0},
+//     { name: "ad2", price: 1.75, show: 0 },
+//     { name: "ad3", price: 1.33, show: 0 },
+//     { name: "ad4", price: 0.48, show: 0 },
+// ];
+
+// console.time('second');
+// for(let i = 0; i < 1000000; i++ ){
+
+//     spreadTrafficEvenly2(ads2);
+// }
+// console.timeEnd('second');
+
+
+// const ads3 = [
+//     { name: "ad1", price: 1.8, show: 0},
+//     { name: "ad2", price: 1.75, show: 0 },
+//     { name: "ad3", price: 1.33, show: 0 },
+//     { name: "ad4", price: 0.48, show: 0 },
+// ];
+
+// console.time('third');
+// for(let i = 0; i < 1000000; i++ ){
+
+//     spreadTrafficEvenly3(ads3);
+// }
+// console.timeEnd('third');
+
+
+
+
+
+
+
+const ads = [
+    { name: "ad1", price: 1.8, show: 0},        
+    { name: "ad2", price: 1.75, show: 0 },      
+    { name: "ad3", price: 1.33, show: 0 },
+    { name: "ad4", price: 0.48, show: 0 },
+];
+
+const spreadTrafficByPrice = (banners) => {
+
+    const adsSum = banners.reduce((output, next) => {
+        output+=next.price;
+        return output
+    },0);
+
+    const arrWithPercents = ads.reduce((output,el,i) => {
+        const percent = el.price / adsSum;
+        const start = output[i-1]?.end || 0;
+        const end = start + percent;
+
+        el.start = start;
+        el.end = end;
+        output.push(el);
+
+        return output
+
+    },[]);
+
+    const randomPath = Math.random();
+
+    const banner =  arrWithPercents.find(el => {
+        return randomPath >= el.start && randomPath <= el.end
+    });
+
+    banner.show++;
+
+
+} 
+
+
+for(let i = 0; i < 1000000; i++){
+    spreadTrafficByPrice(ads)
+
+}
+console.log(ads);
+
+
+const buckets = [
+    {id: 1, apples: 0, start: 0, end: 0.7}, 
+    {id: 2, apples: 0, start: 0.7, end: 1}
+];
+
+for(let i = 0; i < 1000000; i++){
+
+    const randomPath = Math.random();
+
+    const singleBucket =  buckets.find(el => {
+        return randomPath >= el.start && randomPath <= el.end
+    });
+
+    singleBucket.apples++;
+
+}
+console.log(buckets);
+
+
+
+
+
+
+
+
+
+// output
+
+// -123463269.345123
+
+
+function parseNumber(text) {
+
+
+}
+
+
+function parseNumber(str) {
+  let number = 0;
+  let hasNumbers = false;
+  let isNegative = false;
+  let digitsAfterFloat = 0;
+
+  const isNumber = charCode => {
+    return charCode > 47 && charCode < 58;
+  };
+
+  for (let i = 0; i < str.length; i++) {
+    const codeNumber = str[i].charCodeAt(0);
+
+    // if str[i] === ""-"" and next symbol str[i + 1] is number
+    if (codeNumber === 45) {
+      isNegative = isNumber(str[i + 1].charCodeAt(0));
+    } else if (isNumber(codeNumber)) {
+      const digit = codeNumber - 48;
+      number = number * 10 + digit;
+      hasNumbers = true;
+
+      if (digitsAfterFloat > 0) {
+        digitsAfterFloat *= 10;
+      }
+    } else if (
+      // if str[i] === "","" or ""."" and next symbol str[i + 1] is number
+      !digitsAfterFloat &&
+      (codeNumber === 44 || codeNumber === 46) &&
+      isNumber(str[i + 1].charCodeAt(0))
+    ) {
+      digitsAfterFloat = 1;
+    } else if (number) {
+      // stop all iterations when number is completely parsed.
+      break;
+    }
+  }
+
+  if (!hasNumbers) {
+    return NaN;
+  }
+
+  const leftPart = isNegative ? -number : number;
+
+  return digitsAfterFloat ? leftPart / digitsAfterFloat : leftPart;
+}
+const text2 = 'hello world here is my balance -0123463269,345123.123456789 USDT';
+
+console.log(parseNumber(text2));
+
+
+
+
