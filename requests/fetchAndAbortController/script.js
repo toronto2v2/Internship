@@ -61,21 +61,3 @@ const fetchData2 = async () => {
 
 fetchData2()
 // щоб перервати запит викликаємо controller.abort()
-
-
-function* firstGenerator () {
-    yield 1
-    yield 2
-    yield 3
-};
-
-
-function* secondGen () {
-    yield* firstGenerator();
-    yield* firstGenerator();
-}
-
-
-const generator = secondGen();
-
-console.log(generator.next());

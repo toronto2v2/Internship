@@ -1,0 +1,12 @@
+.masked__wrapper{
+    text-align: center;
+}
+
+.masked__header{
+    font-size: 30px;
+}
+.masked__input{
+    margin-top: 5px;
+    padding: 10px;
+    outline: none;
+}

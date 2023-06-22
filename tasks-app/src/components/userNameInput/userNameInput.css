@@ -1,0 +1,34 @@
+.name__wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.name__group{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.name__input{
+    padding: 10px;
+    outline: none;
+}
+.name__button{
+    font-weight: 700;
+    transition: .05s all linear;
+    padding: 10px;
+    border:none;
+    cursor:pointer;
+    background-color: rgba(1, 243, 53, 0.589);
+    border-radius:20px
+}
+.name__button:hover{
+    background-color: rgb(6, 138, 34);
+}
+
+.clearStore{
+    background-color: rgba(248, 88, 25, 0.788);
+}
+.clearStore:hover{
+    background-color: rgba(248, 59, 25, 0.87);
+}

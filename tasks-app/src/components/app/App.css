@@ -1,0 +1,33 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    
+}
+.App{
+    padding: 25px;
+}
+.modal__control{
+    display: flex;
+    gap: 15px;
+}
+.offer{
+    cursor: pointer;
+    padding: 10px;
+    border:none;
+    font-weight: 600;
+    background-color:rgba(25, 223, 206, 0.589);
+    border-radius:15px
+
+}
+.offer:hover{
+    background-color:rgb(91, 171, 224);
+}
+
+.nameSection{
+    margin-top: 50px;
+}
+.maskedSection{
+    margin-top: 50px;
+}

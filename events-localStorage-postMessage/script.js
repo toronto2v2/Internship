@@ -67,7 +67,7 @@ let newCustomEvent;
 
 const btn2 =  document.querySelector('#elem2');
 let customEvent = new CustomEvent('custom', {bubbles:true, cancelable:true, composed:true, detail:{name:'misha'}});// створюємо івент з details
-//                                          властивість composed присутня тільки в CustomEvent
+//                                          властивість composed присутня тільки в CustomEvent і Event?
 btn2.addEventListener('custom', (event) => console.log(event));  // додаємо слухача за 'custom';
 btn2.dispatchEvent(customEvent);       // Можемо при будь яких сценаріях викликати діспатч 
 
@@ -209,7 +209,7 @@ let addEventListenerr;
 
 __________________________________________________________________________________________
 |                                                                                        |
-|                          .removeEventListener(type, listener, optionsObj)                 |
+|                          .removeEventListener(type, listener, optionsObj)              |
 |________________________________________________________________________________________| */
 let removeEventListenerr;
 
