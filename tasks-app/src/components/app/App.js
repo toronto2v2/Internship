@@ -53,7 +53,7 @@ function App() {
                 <UserNameInput/>
             </section>
             <section className="maskedSection">
-                <MaskedInput mask = '(XXX) XXX-XX-XX'/>
+                <MaskedInput mask = '+38 (XXX) XXX-XX-XX'/>
             </section>
         </div>
     );

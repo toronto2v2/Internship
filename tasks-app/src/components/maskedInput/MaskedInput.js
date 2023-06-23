@@ -9,6 +9,7 @@ const MaskedInput = ({ mask }) => {
         setValue(mask);
     }, [mask]);
 
+
     const onInputFocus = (e) => {
         setTimeout(() => {
             e.target.selectionStart = e.target.selectionEnd =
@@ -42,10 +43,9 @@ const MaskedInput = ({ mask }) => {
         <div className="masked__wrapper">
             <h3 className="masked__header">Enter number</h3>
             <input
-                value={value}
+                defaultValue={value}
                 ref = {inputRef}
                 maxLength={mask.length}
-                onChange={(e) => setValue(e.target.value)}
                 onKeyDown={(e) =>  onInputChange(e)}
                 onFocus={(e) => onInputFocus(e)}
                 type="text"
