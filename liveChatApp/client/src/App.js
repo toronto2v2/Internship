@@ -17,10 +17,16 @@ function App() {
         }
     };
 
+    const handleOnlineUsers = (data) => {
+        setOnline(data);
+    }
+
     useEffect(() => {
-        socket.on("updateOnline", (data) => {
-            setOnline(data);
-        });
+        socket.on("updateOnline", handleOnlineUsers);
+
+        return () => {
+            socket.off("updateOnline", handleOnlineUsers);
+        }
     }, []);
 
     const content = chatVisible ? (

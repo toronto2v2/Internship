@@ -33,18 +33,27 @@ const ChatComponent = ({ socket, user, room, online }) => {
         }
         socket.emit("user_typing", { user, room });
     };
+    
+    const receiveTypingUserHandler = (data) => {
+        setTypingStatus(data);
+    };
+    const removeTypingHandler = () => {
+        setTypingStatus("");
+    };
+    const receiveMsgHandler = (data) => {
+        setMessagesData((prevMessages) => [...prevMessages, data]);
+    };
+
     useEffect(() => {
-        socket.on("receive_typingUser", (data) => {
-            console.log("receive_typingUser");
-            setTypingStatus(data);
-        });
-        socket.on("removeTyping", () => {
-            console.log("removeTyping");
-            setTypingStatus("");
-        });
-        socket.on("receive_msg", (data) => {
-            setMessagesData((prevMessages) => [...prevMessages, data]);
-        });
+        socket.on("receive_typingUser", receiveTypingUserHandler);
+        socket.on("removeTyping", removeTypingHandler);
+        socket.on("receive_msg", receiveMsgHandler);
+
+        return () => {
+            socket.off("receive_typingUser", receiveTypingUserHandler);
+            socket.off("removeTyping", removeTypingHandler);
+            socket.off("receive_msg", receiveMsgHandler);
+        };
     }, [socket]);
 
 
