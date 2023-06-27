@@ -1,0 +1,10 @@
+.listWrapper{
+    position: absolute;
+    right: -60px;
+    top:0px;
+    transform: translateX(55%);
+    text-align: left;
+}
+.usersOnlineWrapper{
+    list-style-type: none;
+}

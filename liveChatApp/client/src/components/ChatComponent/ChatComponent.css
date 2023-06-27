@@ -1,0 +1,60 @@
+.chatWrapper{
+    margin-top: 150px;
+}
+.contentWrapper{
+    position: relative;
+
+    width: 300px;
+    margin: 0 auto;
+}
+.chatHeader{
+    background-color: #17adf394;
+    border-radius: 5px;
+    padding: 7px;
+}
+.chatHeader p {
+    font-size: 25px;
+}
+
+.chatBody{
+    text-align: left;
+    padding: 5px;
+    padding-bottom: 15px;
+    border: 1px solid black;
+    height: 300px;
+    overflow-y:scroll;
+}
+.statusSender{
+    margin-top: 8px;
+}
+.chatFooter{
+    display: flex;
+
+}
+.messageInput{
+    padding: 7px;
+    flex-grow: 1;
+}
+
+.sendMsgBtn{
+    cursor: pointer;
+    padding: 7px;
+}
+.messageWrapper{
+    margin-top: 8px;
+}
+.message{
+    padding: 3px;
+    border-radius:15px;
+    font-size: 18px;
+    background-color: #0398eec5;
+}
+.author{
+    font-size: 12px;
+    font-weight: 700;
+}
+.time{
+    font-size: 12px;
+    margin-left: 3px;
+
+}

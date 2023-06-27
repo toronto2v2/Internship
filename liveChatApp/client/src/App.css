@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.App {
+  text-align: center;
+}
+.appHeader{
+    margin-top: 8px;
+}
+
+.dataWrapper{
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+}
+
+.nameInput{
+    padding: 5px;
+    outline: none;
+    border-radius:8px;
+    border:2px solid rgba(3, 167, 3, 0.733);
+}
+.roomInput{
+    padding: 5px;
+    outline: none;
+    border-radius:8px;
+    border:2px solid rgba(3, 167, 3, 0.733);
+
+}
+
+.joinChatBtn{
+    transition: .1s all linear;
+    cursor: pointer;
+    padding: 5px;
+    background-color: white;
+    border-radius:8px;
+    border:2px solid rgba(3, 129, 167, 0.733);
+
+
+}
+.joinChatBtn:hover{
+    transform: scale(1.05);
+}
